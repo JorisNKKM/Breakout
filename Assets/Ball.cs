@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Ball : MonoBehaviour
 {
+    public static UnityEvent onBallLose = new();
     Rigidbody2D rb;
     public float speed;
 
@@ -26,5 +28,11 @@ public class Ball : MonoBehaviour
         {
             brick.Break();
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        onBallLose.Invoke();
+        Destroy(gameObject);
     }
 }
